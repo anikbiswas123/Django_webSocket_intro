@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <h2>counter page</h2>
+
+    <h3 id="dt"></h3>
+    
+    <script>
+
+        var ws = new WebSocket('ws://127.0.0.1:8000/ws/sc/')
+
+        /* ws.onopen = function(){
+            console.log('websocket connection open.............')
+            ws.send('Hi, messges from client.........')
+        }
+        ws.onmessage = function(event){
+            console.log('websocket messages Received .....',event)
+        }
+        ws.onerror = function(event){
+            console.log('websocket messages error occurages.....',event)
+        }
+
+        ws.onclose = function(event){
+            console.log('websocket connection close .....',event)
+        }
+*/
+
+ws.addEventListener('open',(event)=>{
+    console.log('messages connection open .............',event)
+    ws.send('Hi! messages from client.........')
+})
+
+ws.addEventListener('message',(event)=>{
+    console.log('message Receive from sever.........',event.data)
+    document.getElementById('dt').innerText=event.data
+    console.log(typeof(event.data))
+    var dt=JSON.parse(event.data)
+    console.log(typeof(dt))
+})
+ ws.addEventListener('error',(event)=>{
+    console.log('message error occurage ',event)
+ })
+ ws.addEventListener('close',(event)=>{
+    console.log('webSocket connection close',event)
+ })
+
+    </script>
+</body>
+</html>
